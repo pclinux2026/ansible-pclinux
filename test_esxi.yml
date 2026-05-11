@@ -1,17 +1,17 @@
 ---
 - name: Validar Conexion a VMware ESXi 8
   hosts: all
-  gather_facts: no
+  gather_facts: false
   tasks:
     - name: Obtener hechos del host ESXi
       community.vmware.vmware_host_facts:
         hostname: "{{ ansible_host }}"
         username: "{{ lookup('ansible.builtin.env', 'VMWARE_USER') }}"
         password: "{{ lookup('ansible.builtin.env', 'VMWARE_PASSWORD') }}"
-        validate_certs: no
+        validate_certs: false
       delegate_to: localhost
       register: host_facts
 
     - name: Mostrar version del servidor
       ansible.builtin.debug:
-        msg: "El servidor es {{ host_facts.ansible_facts.product_name }} version {{ host_facts.ansible_facts.product_version }}"
+        msg: "Conectado exitosamente a {{ host_facts.ansible_facts.product_name }}"

@@ -1,6 +1,6 @@
 ---
 - name: Validar Conexion a VMware ESXi 8
-  hosts: all
+  hosts: esxi-01.pclinux.com
   gather_facts: false
   tasks:
     - name: Instalar pyvmomi dinamicamente

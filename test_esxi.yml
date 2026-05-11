@@ -3,6 +3,12 @@
   hosts: all
   gather_facts: false
   tasks:
+    - name: Instalar pyvmomi dinamicamente
+      ansible.builtin.pip:
+        name: pyvmomi
+        state: present
+      delegate_to: localhost
+
     - name: Obtener hechos del host ESXi
       community.vmware.vmware_host_facts:
         hostname: "{{ ansible_host }}"
@@ -11,6 +17,6 @@
         validate_certs: false
       delegate_to: localhost
       register: host_facts
-    - name: Mostrar version del servidor
+    - name: Mostrar resultado
       ansible.builtin.debug:
-        msg: "Conectado exitosamente a {{ host_facts.ansible_facts.product_name }}"
+        msg: "Conectado a {{ host_facts.ansible_facts.product_name }} version {{ host_facts.ansible_facts.product_version }}"

@@ -11,7 +11,6 @@
         validate_certs: false
       delegate_to: localhost
       register: host_facts
-
     - name: Mostrar version del servidor
       ansible.builtin.debug:
         msg: "Conectado exitosamente a {{ host_facts.ansible_facts.product_name }}"

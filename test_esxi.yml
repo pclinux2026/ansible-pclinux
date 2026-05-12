@@ -3,15 +3,9 @@
   hosts: esxi-01.pclinux.com
   gather_facts: false
   vars:
-    # Forzamos a Ansible a usar el Python del entorno de ejecución
-    ansible_python_interpreter: /usr/bin/python3
+    # Apuntamos al Python donde tienes instalado pyvmomi
+    ansible_python_interpreter: /home/developer/ansible_env/bin/python
   tasks:
-    - name: Asegurar libreria PyVmomi en el contenedor
-      ansible.builtin.pip:
-        name: pyvmomi
-        state: present
-      delegate_to: localhost
-
     - name: Obtener hechos del host ESXi
       community.vmware.vmware_host_facts:
         hostname: "{{ ansible_host }}"

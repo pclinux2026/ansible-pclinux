@@ -2,10 +2,14 @@
 - name: Validar Conexion a VMware ESXi 8
   hosts: esxi-01.pclinux.com
   gather_facts: false
-  vars:
-    # Apuntamos al Python donde tienes instalado pyvmomi
-    ansible_python_interpreter: /home/developer/ansible_env/bin/python
   tasks:
+    - name: Inyectar pyvmomi dentro del contenedor
+      ansible.builtin.pip:
+        name: pyvmomi
+        state: present
+        executable: /usr/bin/pip3  # Usamos el pip interno del contenedor
+      delegate_to: localhost
+
     - name: Obtener hechos del host ESXi
       community.vmware.vmware_host_facts:
         hostname: "{{ ansible_host }}"
@@ -17,4 +21,4 @@
 
     - name: Mostrar resultado
       ansible.builtin.debug:
-        msg: "Conectado a {{ host_facts.ansible_facts.product_name }} version {{ host_facts.ansible_facts.product_version }}"
+        msg: "EXITO: Conectado a {{ host_facts.ansible_facts.product_name }} version {{ host_facts.ansible_facts.product_version }}"

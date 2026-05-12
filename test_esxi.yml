@@ -24,6 +24,7 @@
     - name: Mostrar resultado
       ansible.builtin.debug:
         msg: 
-          - "¡CONEXIÓN EXITOSA!"
-          - "Servidor: {{ host_facts.ansible_facts.hw_model }}"
-          - "Versión: {{ host_facts.ansible_facts.product_full_name }}"
+          - "¡CONEXIÓN EXITOSA CON PCLINUX PERÚ!"
+          - "Servidor: {{ host_facts.ansible_facts.product_full_name }}"
+          - "Modelo: {{ host_facts.ansible_facts.hw_model }}"
+          - "Versión: {{ host_facts.ansible_facts.product_version }}"

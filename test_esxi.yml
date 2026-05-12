@@ -2,12 +2,15 @@
 - name: Validar Conexion a VMware ESXi 8
   hosts: esxi-01.pclinux.com
   gather_facts: false
+  vars:
+    # Forzamos el uso de Python 3.12 que es donde vive pyvmomi según tu log
+    ansible_python_interpreter: /usr/bin/python3.12
   tasks:
     - name: Inyectar pyvmomi dentro del contenedor
       ansible.builtin.pip:
         name: pyvmomi
         state: present
-        executable: /usr/bin/pip3  # Usamos el pip interno del contenedor
+        executable: /usr/bin/pip3
       delegate_to: localhost
 
     - name: Obtener hechos del host ESXi

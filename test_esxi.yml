@@ -3,8 +3,7 @@
   hosts: esxi-01.pclinux.com
   gather_facts: false
   vars:
-    # Forzamos el uso de Python 3.12 que es donde vive pyvmomi según tu log
-    ansible_python_interpreter: /usr/bin/python3.12
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: Inyectar pyvmomi dentro del contenedor
       ansible.builtin.pip:
@@ -24,4 +23,7 @@
 
     - name: Mostrar resultado
       ansible.builtin.debug:
-        msg: "EXITO: Conectado a {{ host_facts.ansible_facts.product_name }} version {{ host_facts.ansible_facts.product_version }}"
+        msg: 
+          - "¡CONEXIÓN EXITOSA!"
+          - "Servidor: {{ host_facts.ansible_facts.hw_model }}"
+          - "Versión: {{ host_facts.ansible_facts.product_full_name }}"

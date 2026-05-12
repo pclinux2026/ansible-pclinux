@@ -5,14 +5,7 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   tasks:
-    - name: Inyectar pyvmomi dentro del contenedor
-      ansible.builtin.pip:
-        name: pyvmomi
-        state: present
-        executable: /usr/bin/pip3
-      delegate_to: localhost
-
-    - name: Obtener hechos del host ESXi
+    - name: Consultar API de VMware
       community.vmware.vmware_host_facts:
         hostname: "{{ ansible_host }}"
         username: "{{ lookup('ansible.builtin.env', 'VMWARE_USER') }}"
@@ -21,10 +14,6 @@
       delegate_to: localhost
       register: host_facts
 
-    - name: Mostrar resultado
+    - name: ¡LOGRADO!
       ansible.builtin.debug:
-        msg: 
-          - "¡CONEXIÓN EXITOSA CON PCLINUX PERÚ!"
-          - "Servidor: {{ host_facts.ansible_facts.product_full_name }}"
-          - "Modelo: {{ host_facts.ansible_facts.hw_model }}"
-          - "Versión: {{ host_facts.ansible_facts.product_version }}"
+        msg: "Conectado a {{ host_facts.ansible_facts.product_full_name }}"
